@@ -45,7 +45,7 @@ function App() {
             <Routes>
                 <Route path='/books' element={<BooksList handleLoadMore={handleLoadMore}/>}/>
                 <Route path='/books/:id' element={<BookPage/>}/>
-                <Route path='*' element={<BooksList handleLoadMore={handleLoadMore}/>}/>
+                <Route path='/google-books-react/' element={<BooksList handleLoadMore={handleLoadMore}/>}/>
             </Routes>
         </>
     );
