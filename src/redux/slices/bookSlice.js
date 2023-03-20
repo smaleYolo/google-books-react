@@ -21,10 +21,10 @@ export const fetchBooks = createAsyncThunk(
 
 export const fetchMoreBooks = createAsyncThunk(
     'books/fetchMoreBooks',
-    async ({ startIndex, maxResults }, { rejectWithValue }) => {
+    async ({ startIndex, maxResults,category,searchTerm = 'js' }, { rejectWithValue }) => {
         try {
             const response = await fetch(
-                `https://www.googleapis.com/books/v1/volumes?q=subject:philosophy&startIndex=${startIndex}&maxResults=${maxResults}`
+                `https://www.googleapis.com/books/v1/volumes?q=${searchTerm ? `${'+intitle:'+searchTerm}` : 'node'}${category !=='all' ? `+subject:${category}` : ''}&startIndex=${startIndex}&maxResults=${maxResults}`
             );
             if (!response.ok) {
                 throw new Error('Network response was not ok');

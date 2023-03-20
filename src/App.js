@@ -23,12 +23,12 @@ function App() {
     };
 
     useEffect(() => {
-        dispatch(fetchMoreBooks({ startIndex, maxResults }));
+        dispatch(fetchMoreBooks({ startIndex, maxResults, category, searchTerm }));
     }, []);
 
     const handleLoadMore = () => {
         setStartIndex(startIndex + maxResults);
-        dispatch(fetchMoreBooks({ startIndex: startIndex + maxResults, maxResults }));
+        dispatch(fetchMoreBooks({ startIndex: startIndex + maxResults, maxResults,category,searchTerm }));
     };
 
     return (
