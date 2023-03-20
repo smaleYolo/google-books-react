@@ -1,25 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import BooksList from "./components/BooksList";
+import {Routes, Route} from "react-router-dom";
+import BookPage from "./pages/BookPage";
+import React, {useEffect, useState} from "react";
+import {useDispatch} from "react-redux";
+import {fetchBooks, fetchMoreBooks} from "./redux/slices/bookSlice";
+import Header from "./components/Header";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [startIndex, setStartIndex] = useState(0);
+    const [maxResults, setMaxResults] = useState(10);
+
+    const [searchTerm, setSearchTerm] = useState("js");
+    const [category, setCategory] = useState("all");
+    const [sortBy, setSortBy] = useState("relevance");
+
+    const dispatch = useDispatch()
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(fetchBooks({searchTerm, sortBy, category}))
+    };
+
+    useEffect(() => {
+        dispatch(fetchMoreBooks({ startIndex, maxResults }));
+    }, []);
+
+    const handleLoadMore = () => {
+        setStartIndex(startIndex + maxResults);
+        dispatch(fetchMoreBooks({ startIndex: startIndex + maxResults, maxResults }));
+    };
+
+    return (
+        <>
+            <Header
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                setCategory={setCategory}
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                handleSubmit={handleSubmit}
+                category={category}
+            />
+            <Routes>
+                <Route path='/' element={<BooksList handleLoadMore={handleLoadMore}/>}/>
+                <Route path='/:id' element={<BookPage/>}/>
+                <Route path='*' element={<BooksList handleLoadMore={handleLoadMore}/>}/>
+            </Routes>
+        </>
+    );
 }
 
 export default App;
