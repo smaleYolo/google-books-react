@@ -40,7 +40,7 @@ const BookPage = () => {
     return (
         <div className='flex justify-between h-full'>
             <div className='w-3/4 bg-gray-100 py-8'>
-                <Link to='/'>
+                <Link to='/books'>
                     <button
                         className='bg-yellow-300 w-14 h-8 rounded-lg mx-4 shadow-lg hover:scale-110 transition'
                     >

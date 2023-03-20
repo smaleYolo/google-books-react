@@ -8,7 +8,7 @@ const BookCard = ({bookId,title,images,category,authors}) => {
         <div className=' w-full h-full bg-gray-100 flex flex-col rounded-md'>
             <div className='flex px-4 py-8 justify-center'>
                 {images ? (
-                    <Link to={`/${bookId}`}><img
+                    <Link to={`/books/${bookId}`}><img
                         src={images.thumbnail}
                         width={150}
                         height={300}
@@ -16,7 +16,7 @@ const BookCard = ({bookId,title,images,category,authors}) => {
                         className='shadow-lg hover:scale-110 transition rounded-md cursor-pointer'
                     /></Link>
                 ) : (
-                    <Link to={`/${bookId}`}><img
+                    <Link to={`/books/${bookId}`}><img
                         src={noImage}
                         width={150}
                         height={300}

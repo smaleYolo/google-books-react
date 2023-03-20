@@ -43,8 +43,8 @@ function App() {
                 category={category}
             />
             <Routes>
-                <Route path='/' element={<BooksList handleLoadMore={handleLoadMore}/>}/>
-                <Route path='/:id' element={<BookPage/>}/>
+                <Route path='/books' element={<BooksList handleLoadMore={handleLoadMore}/>}/>
+                <Route path='/books/:id' element={<BookPage/>}/>
                 <Route path='*' element={<BooksList handleLoadMore={handleLoadMore}/>}/>
             </Routes>
         </>
