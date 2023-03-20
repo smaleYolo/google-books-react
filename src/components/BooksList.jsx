@@ -2,26 +2,16 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import BookCard from './BookCard';
 import {CircularProgress} from "@mui/material";
-import {Link, useLocation} from "react-router-dom";
 
 const BooksList = ({handleLoadMore}) => {
     const {totalItems, items} = useSelector((state) => state.bookSlice.books);
     const {loading} = useSelector((state) => state.bookSlice);
 
-    //small github pages bug solving
-    let {pathname} = useLocation()
 
     if (loading) {
         return (
             <div className='flex justify-center items-center my-20'>
                 <CircularProgress/>
-                {pathname === '/google-books-react/' ? (
-                    <Link to='/books'>
-                        <h2 className='bg-blue-400 text-white rounded-md px-3 py-2 cursor-pointer hover:opacity-60'>
-                            Restart :)
-                        </h2>
-                    </Link>
-                ) : null}
             </div>
         )
     }
