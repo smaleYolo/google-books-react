@@ -1,11 +1,12 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 
 
+//&key=AIzaSyCWDKaWPjXaPLZ0D_uo9NV8FKfXN2n1xDY
 export const fetchBooks = createAsyncThunk(
     'books/fetchBooks',
     async function ({searchTerm = 'js',sortBy,category}, {rejectWithValue}) {
 
-        let url = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm ? `${'+intitle:'+searchTerm}` : 'node'}${category !=='all' ? `+subject:${category}` : ''}&orderBy=${sortBy ? sortBy : 'relevance'}&maxResults=10&key=AIzaSyA4g9XTRpf40V_9tTzF4BN3g1xDNsBype4`
+        let url = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm ? `${'+intitle:'+searchTerm}` : 'node'}${category !=='all' ? `+subject:${category}` : ''}&orderBy=${sortBy ? sortBy : 'relevance'}&maxResults=10`
 
         const response = await fetch(url)
 
