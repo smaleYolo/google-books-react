@@ -5,18 +5,22 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 export const fetchBooks = createAsyncThunk(
     'books/fetchBooks',
     async function ({searchTerm = 'js',sortBy,category}, {rejectWithValue}) {
+        try {
+            let url = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm ? `${'+intitle:'+searchTerm}` : 'node'}${category !=='all' ? `+subject:${category}` : ''}&orderBy=${sortBy ? sortBy : 'relevance'}&maxResults=10`
 
-        let url = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm ? `${'+intitle:'+searchTerm}` : 'node'}${category !=='all' ? `+subject:${category}` : ''}&orderBy=${sortBy ? sortBy : 'relevance'}&maxResults=10`
+            const response = await fetch(url)
 
-        const response = await fetch(url)
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
 
-        if (!response.ok) {
-            return rejectWithValue('Some error occurred!')
+            const data = await response.json()
+
+            return data;
+
+        } catch (error) {
+            return rejectWithValue(error.message);
         }
-
-        const data = await response.json()
-
-        return data;
     }
 )
 
@@ -41,15 +45,20 @@ export const fetchMoreBooks = createAsyncThunk(
 export const fetchBookById = createAsyncThunk(
     'books/fetchBookById',
     async function(id, {rejectWithValue}){
-        const response = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}`)
+        try {
+            const response = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}`)
 
-        if (!response.ok) {
-            return rejectWithValue('Server Error!')
+            if (!response.ok) {
+                return rejectWithValue('Server Error!')
+            }
+
+            const data = await response.json()
+
+            return data;
+
+        } catch (error) {
+            return rejectWithValue(error.message);
         }
-
-        const data = await response.json()
-
-        return data;
     }
 )
 
